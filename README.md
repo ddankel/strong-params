@@ -10,10 +10,10 @@ The implementation of strong parameters was previously forked from [koa-strong-p
 
 ## Installation
 
-Install the [npm](https://www.npmjs.org/package/strong-params) package.
+Install the package.
 
 ```
-npm install strong-params --save
+yarn add https://github.com/ddankel/strong-params.git
 ```
 
 #### Attach the middleware.
@@ -21,18 +21,18 @@ npm install strong-params --save
 ##### Express
 
 ```js
-var express = require('express')
-var params = require('strong-params')
-app.use(params.expressMiddleware())
+var express = require("express");
+var params = require("strong-params");
+app.use(params.expressMiddleware());
 ```
 
 ##### Koa
 
 ```js
-var koa = require('koa')
-var params = require('strong-params')
-var app = new koa()
-app.use(params.koaMiddleware())
+var koa = require("koa");
+var params = require("strong-params");
+var app = new koa();
+app.use(params.koaMiddleware());
 ```
 
 ## Usage
@@ -43,69 +43,70 @@ app.use(params.koaMiddleware())
 
 ```js
 app.use(function (req, res, next) {
-  var params = req.parameters
-})
+  var params = req.parameters;
+});
 ```
 
 ##### Koa
 
 ```js
 app.use(function (ctx, next) {
-  var params = ctx.parameters
-})
+  var params = ctx.parameters;
+});
 ```
 
 ##### Standalone
 
 ```js
-var Parameters = require('strong-params').Parameters
+var Parameters = require("strong-params").Parameters;
 var params = Parameters({
-  id: '13',
-  name: 'Bob',
-  age: '13',
-  hobbies: ['skydiving', 'football', 'photographing'],
+  id: "13",
+  name: "Bob",
+  age: "13",
+  hobbies: ["skydiving", "football", "photographing"],
   address: {
-    country: 'US',
-    street: '261 West'
+    country: "US",
+    street: "261 West",
   },
   contacts: [
     {
-      type: 'e-mail',
-      value: 'bob@random.rnd'
-    }, {
-      type: 'mobile',
-      value: '+123987456'
-    }
-  ]
-})
+      type: "e-mail",
+      value: "bob@random.rnd",
+    },
+    {
+      type: "mobile",
+      value: "+123987456",
+    },
+  ],
+});
 ```
 
 ### Methods
 
 ```js
 // All available params
-params.all()
+params.all();
 // -> { id: '13', name: 'Bob', age: '13', hobbies: ['skydiving', 'football', 'photographing'], address: { country: 'US', street: '261 West' }, contacts: [{ type: 'e-mail', value: 'bob@random.rnd' }, { type: 'mobile', value: '+123987456' }] }
 
 // Only selected params
-params.permit('name', 'age').value()
+params.permit("name", "age").value();
 // -> { name: 'Bob', age: '13' }
 
-params.permit('id', 'name', {hobbies: []}).value()
+params.permit("id", "name", { hobbies: [] }).value();
 // -> { id: '13', name: 'Bob', hobbies: ['skydiving', 'football', 'photographing'] }
 
-params.permit('id', 'name', {contacts: []}).value()
+params.permit("id", "name", { contacts: [] }).value();
 // -> { id: '13', name: 'Bob', contacts: [] }
 
-params.permit('id', 'name', {contacts: ['type', 'value']}).value()
+params.permit("id", "name", { contacts: ["type", "value"] }).value();
 // -> { id: '13', name: 'Bob', contacts: [{ type: 'e-mail', value: 'bob@random.rnd' }, { type: 'mobile', value: '+123987456' }] }
 
 // All params of a sub-object
-params.require('address').all()
+params.require("address").all();
 // -> { country: 'US', street: '261 West' }
 
 // All params of a sub-object
-params.require('contacts').permit('type', 'value').value()
+params.require("contacts").permit("type", "value").value();
 // -> [{ type: 'e-mail', value: 'bob@random.rnd' }, { type: 'mobile', value: '+123987456' }]
 ```
 
@@ -114,10 +115,10 @@ params.require('contacts').permit('type', 'value').value()
 ```js
 // ParameterMissingError
 try {
-  params.require('missingKey')
-} catch(err) {
-  err instanceof ParameterMissingError // -> true
-  err instanceof Error // -> true
+  params.require("missingKey");
+} catch (err) {
+  err instanceof ParameterMissingError; // -> true
+  err instanceof Error; // -> true
 }
 ```
 
